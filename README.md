@@ -32,9 +32,11 @@ The goal is to simulate a real-world IT Service Desk environment and gain hands-
 
 The lab environment was created using Microsoft Azure.
 
-- Accessed the [Azure Portal](https://azure.microsoft.com/en-au/pricing/purchase-options/azure-account/search/) to create a virtual machine  
+- Accessed the [Azure Portal](https://azure.microsoft.com/en-au/pricing/purchase-options/azure-account/search/) to create a virtual machine
 - Configured networking for the lab environment  
 - Connected to the system using Remote Desktop  
+
+<img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Github%20Photos/1.%20Azure%20Creation.JPG" width="900">
 
 ---
 
