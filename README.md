@@ -1,24 +1,30 @@
 # 🔐 VNC Exploitation & Traffic Analysis
 
 ## 📌 Overview
-This project documents a hands-on cybersecurity lab completed on TryHackMe.  
-The objective was to identify exposed services, gain access to a target system, extract sensitive data, and analyse captured network traffic using Wireshark.
+This lab demonstrates how to deploy and configure the open-source help desk system **osTicket** on a Windows virtual machine using Microsoft Azure.
+
+The goal is to simulate a real-world IT Service Desk environment and gain hands-on experience with web servers, databases, and ticketing systems.
 
 ---
 
 ## 🎯 Objectives
-- Perform network reconnaissance  
-- Identify exposed services  
-- Gain access to a remote system  
-- Locate and extract sensitive files  
-- Analyse network traffic for useful data  
+- Deploy a Windows VM in **Microsoft Azure** 
+- Install and configure **Internet Information Services**
+- Set up PHP and MySQL
+- Install and configure osTicket
+- Access and use a working help desk system
 
 ---
 
-## 🖥️ Environment
-- **Attacker Machine:** Kali Linux (VirtualBox)  
-- **VPN:** OpenVPN connection to TryHackMe lab network  
-- **Target Machine:** Linux system with exposed VNC service  
+**🧰 Technologies Used**
+
+- Microsoft Azure (Virtual Machines)
+- Windows 10
+- IIS (Web Server)
+- PHP (v7.3)
+- MySQL 5.5
+- Remote Desktop (RDP)
+
 
 ---
 
