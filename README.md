@@ -1,4 +1,4 @@
-# 🔐 VNC Exploitation & Traffic Analysis
+# 🎫 osTicket Help Desk Lab
 
 ## 📌 Overview
 This lab demonstrates how to deploy and configure the open-source help desk system **osTicket** on a Windows virtual machine using Microsoft Azure.
