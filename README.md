@@ -1,4 +1,6 @@
-# osTicket Help Desk Lab (End-to-End Deployment & Troubleshooting)
+# osTicket Help Desk Lab 
+
+🚀 End-to-End Deployment & Troubleshooting (IIS, PHP, MySQL)
 
 
 <p align="center">
@@ -7,7 +9,7 @@
 
 ## Overview
 
-In this lab, I deployed a fully functional **osTicket help desk system** from scratch on a Windows virtual machine.
+In this lab, I deployed a fully functional osTicket help desk system from scratch on a Windows virtual machine hosted in Microsoft Azure.
 
 Rather than relying on automated installers, I manually configured each component so I could better understand how web applications work in a real-world environment.
 
@@ -84,7 +86,7 @@ I performed the following high-level steps:
 
 ---
 
-## Verification
+## ✅ Verification
 
 ### osTicket Application Running
 
@@ -112,7 +114,7 @@ This also confirmed that the PHP installation and IIS handler mapping were confi
 
 ---
 
-## Troubleshooting & Problem Solving
+## 🛠️ Troubleshooting & Problem Solving
 
 During this lab, I encountered multiple real-world issues while configuring IIS, PHP, MySQL, and osTicket. I resolved each issue by identifying the root cause and applying the appropriate fix.
 
@@ -180,7 +182,7 @@ I was able to correctly rename file extension.
 ```text
 php.ini-development -> php.ini
 ```
-This ensured PHP used the correct configuration settings.
+This ensured PHP loaded the correct configuration file required for proper operation.
 
 ---
 
@@ -191,7 +193,7 @@ PHP process crashed when accessed through the browser throwing a HTTP 500 error
 
 **Cause:**
 Missing Visual C++ Redistributable dependency.  
-I identified this after encountering an HTTP 500 error and done a bit of research online, which pointed to a missing Visual C++ Redistributable dependency.
+I conducted further research online, which pointed to a missing Visual C++ Redistributable dependency.
 
 **Fix:**
 Installed the required Visual C++ runtime and restarted IIS using CMD in Adminstrator with the command:
@@ -269,7 +271,7 @@ This ensured PHP had the required functionality to support osTicket and communic
 
 ---
 
-###MySQL Authentication Error
+### MySQL Authentication Error
 
 **Problem:**
 MySQL 8 uses `caching_sha2_password` as the default authentication method, which is not supported by the PHP version being used.  
