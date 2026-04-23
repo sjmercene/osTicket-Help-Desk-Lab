@@ -1,5 +1,10 @@
 # osTicket Help Desk Lab (End-to-End Deployment & Troubleshooting)
 
+
+<p align="center">
+  <img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/OS%20Ticket.JPG" width="600">
+</p>
+
 ## Overview
 
 In this lab, I deployed a fully functional **osTicket help desk system** from scratch on a Windows virtual machine.
