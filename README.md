@@ -95,7 +95,7 @@ Accessed via: `http://localhost/osTicket`
 
 ### PHP Integration with IIS
 
-<img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Verify%20PHP%20Information%20Page.JPG" width="700">
+<img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Verify%20PHP%20Information%20Page.JPG" width="900">
 
 To verify PHP was correctly integrated with IIS, I created and executed a test script (`info.php`).
 
@@ -238,7 +238,7 @@ The osTicket application loaded successfully.
 **Problem:**
 The osTicket installer reported missing required PHP extensions.
 
-<img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Troubleshooting/Error%204%20missing%20MySQL.JPG" width="700">
+<img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Troubleshooting/Error%204%20missing%20MySQL.JPG" width="600">
 
 **Cause:**
 Required extensions were disabled in the `php.ini` configuration file.  
@@ -267,15 +267,16 @@ This ensured PHP had the required functionality to support osTicket and communic
 ###MySQL Authentication Error
 
 **Problem:**
-osTicket could not connect to MySQL and displayed:
+MySQL 8 uses `caching_sha2_password` as the default authentication method, which is not supported by the PHP version being used.  
+I identified this after encountering the error during installation and researching the message, which pointed to an authentication compatibility issue.
 
-The server requested authentication method unknown to the client
+<img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Troubleshooting/MYSQL%20error%202.JPG" width="500">
 
 **Cause:**
 MySQL 8 uses caching_sha2_password by default, which is not supported by PHP 7.3.
 
 **Fix:**
-Updated the authentication method using MySQL Shell:
+Connected to MySQL using MySQL Shell and updated the authentication method:
 ```
 \sql
 \connect root@localhost
@@ -285,6 +286,8 @@ IDENTIFIED WITH mysql_native_password BY 'labuser123!';
 
 FLUSH PRIVILEGES;
 ```
+I initially encountered errors when running commands in the wrong mode and before connecting to the database, but resolved this by switching to SQL mode and establishing a connection first.
+
 **Result:**
 osTicket successfully connected to the MySQL database.
 
