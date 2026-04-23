@@ -109,6 +109,29 @@ During this lab, I encountered multiple real-world issues while configuring IIS,
 
 ---
 
+### PHP Not Working in IIS (HTTP 404.3)
+
+**Problem:**  
+IIS could not process `.php` files.
+
+**Cause:**  
+PHP was not mapped to IIS, so `.php` files were treated as unsupported content.
+
+<img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Troubleshooting/Error%201.JPG" width="700">
+
+**Fix:**  
+Configured a FastCGI handler mapping in IIS:
+
+<img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Adding%20Module%20Mapping.JPG" width="700">
+
+```text
+Request path: *.php
+Module: FastCgiModule
+Executable: C:\PHP\php-cgi.exe
+Name: PHP via FastCGI
+```
+
+
 ### MySQL Installation Issues
 
 **Problem:**  
@@ -141,6 +164,7 @@ Successfully renamed:
 
 ```text
 php.ini-development -> php.ini
+```
 
 ---
 
