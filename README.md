@@ -238,22 +238,22 @@ The osTicket application loaded successfully.
 **Problem:**
 The osTicket installer reported missing required PHP extensions.
 
-<img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Troubleshooting/Error%204%20missing%20MySQL.JPG" width="800">
+<img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Troubleshooting/Error%204%20missing%20MySQL.JPG" width="700">
 
 **Cause:**
 Required extensions were disabled in the `php.ini` configuration file.  
 I identified this after reviewing the installer requirements page, which showed missing extensions needed for osTicket to function properly.
 
 **Fix:**
-Edited `C:\PHP\php.ini` and enabled the following extensions by removing the `;` in front of each line:
-
+Edited `C:\PHP\php.ini` using notepad and enabled the following extensions by removing the `;` in front of each line:
+```
 extension=mysqli
 extension=gd2
 extension=imap
 extension=mbstring
 extension=openssl
 extension=intl
-
+```
 Then restarted IIS:
 `iisreset` Using Adminstrator in CMD
 
