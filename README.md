@@ -85,7 +85,9 @@ I performed the following high-level steps:
 
 <img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/10.Login%20Success.JPG" width="700">
 
-Successfully deployed and accessed the osTicket admin panel. Verified functionality by viewing and managing tickets through the web interface.
+After completing the installation, I accessed the osTicket admin panel to verify the system was fully operational.
+
+From the dashboard, I was able to view and manage tickets, confirming that the application, web server, and database were all working together correctly. I also created a test ticket to confirm that data was being written to the database successfully.
 
 Accessed via: `http://localhost/osTicket`
 
@@ -95,11 +97,13 @@ Accessed via: `http://localhost/osTicket`
 
 <img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Verify%20PHP%20Information%20Page.JPG" width="700">
 
-Verified PHP was correctly integrated with IIS by executing a test script (`info.php`).
+To verify PHP was correctly integrated with IIS, I created and executed a test script (`info.php`).
 
 Accessed via: `http://localhost/info.php`
 
-This confirmed FastCGI and PHP configuration were working correctly.
+When accessed through the browser, the page displayed detailed PHP configuration information, confirming that IIS was successfully processing PHP files through FastCGI. 
+
+This also confirmed that the PHP installation and IIS handler mapping were configured correctly.
 
 ---
 
@@ -115,7 +119,8 @@ During this lab, I encountered multiple real-world issues while configuring IIS,
 IIS could not process `.php` files.
 
 **Cause:**  
-PHP was not mapped to IIS, so `.php` files were treated as unsupported content.
+PHP was not mapped to IIS, so `.php` files were treated as unsupported content.  
+I identified this based on the HTTP 404.3 error shown in the browser, which i looked into some forums online which indicates that the server does not have a handler configured for the requested file type.
 
 <img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Troubleshooting/Error%201.JPG" width="700">
 
@@ -130,22 +135,25 @@ Module: FastCgiModule
 Executable: C:\PHP\php-cgi.exe
 Name: PHP via FastCGI
 ```
+**Result:**  
+IIS was able to process PHP files correctly, and PHP scripts executed successfully in the browser, confirming that the FastCGI configuration was working as expected.
 
 ---
 
 ### MySQL Installation Issues
 
 **Problem:**  
-Experienced repeated installation failures during MySQL setup.
+The installer would not install files properly, likely due to dependency or configuration issues during the setup process.  
+I identified this after noticing the installation would fail partway through and not fully complete.
 
 **Cause:**  
 Installer dependency issues and incomplete setup execution.
 
 **Fix:**  
-Re-ran the installer multiple times and ensured all required dependencies completed successfully.
+I navigated back through the installer and re-executed the setup steps multiple times, ensuring each stage completed properly.
 
 **Result:**  
-MySQL Server installed correctly and was available for use.
+MySQL Server installed successfully and was available for database use. This approach helped resolve the issue without needing to restart the entire installation.
 
 ---
 
@@ -155,64 +163,70 @@ MySQL Server installed correctly and was available for use.
 Unable to properly rename configuration files such as `php.ini-development`.
 
 **Cause:**  
-Windows was hiding known file extensions.
+Windows hides file extensions by default, which made it appear as if the file did not have an extension.  
+I identified this after noticing the file name did not change correctly when attempting to rename it.
 
 **Fix:**  
-Enabled file extension visibility in File Explorer by disabling the “Hide extensions for known file types” setting.
+Enabled file extension visibility in File Explorer by disabling the `Hide extensions for known file types` setting.
 
 **Result:**  
-Successfully renamed:
+I was able to correctly rename file extension.
 
 ```text
 php.ini-development -> php.ini
 ```
+This ensured PHP used the correct configuration settings.
 
 ---
 
 ### FastCGI Crash (HTTP 500)
 
 **Problem:**
-PHP process crashed when accessed through the browser.
+PHP process crashed when accessed through the browser throwing a HTTP 500 error 
 
 **Cause:**
-Missing Visual C++ Redistributable dependency.
+Missing Visual C++ Redistributable dependency.  
+I identified this after encountering an HTTP 500 error and done a bit of research online, which pointed to a missing Visual C++ Redistributable dependency.
 
 **Fix:**
-Installed the required Visual C++ runtime and restarted IIS:
-
-iisreset
+Installed the required Visual C++ runtime and restarted IIS using CMD in Adminstrator with the command:
+`iisreset`
 
 **Result:**
 PHP executed successfully through IIS.
 
-Default Document Error (HTTP 403.14)
+---
+
+### Default Document Error (HTTP 403.14)
 
 **Problem:**
-The osTicket folder loaded but displayed a “Forbidden” error.
+IIS did not have a default document configured, so it did not know which file to load when accessing the directory.  
+I identified this after seeing the 403.14 error in the browser and researching the error code, which indicated that no default document was set.
 
 **Cause:**
-IIS did not know which file to load by default.
+IIS did not have a default document configured, so it did not know which file to load when accessing the directory.
 
 **Fix:**
-Added index.php to the Default Document list in IIS.
+Added `index.php` to the Default Document list in IIS.
 
 **Result:**
-The osTicket installer page loaded correctly.
+The osTicket installer page loaded correctly in the browser, confirming that IIS was able to serve the application as expected.
 
 ---
 
 ### web.config Conflict Issue
 
 **Problem:**
-Encountered issues loading osTicket due to an IIS configuration conflict.
+The osTicket site would not load correctly in IIS.
 
 **Cause:**
-The existing web.config file interfered with IIS handling of the application.
+The `web.config` file was likely causing a configuration conflict.  
+I suspected this after other settings were corrected but the site still would not load properly.
 
 **Fix:**
 Renamed the file:
 
-web.config -> web.config.bak
+`web.config -> web.config.bak`
 
 **Result:**
 The osTicket application loaded successfully.
@@ -224,11 +238,14 @@ The osTicket application loaded successfully.
 **Problem:**
 The osTicket installer reported missing required PHP extensions.
 
+<img src="https://github.com/sjmercene/osTicket-Help-Desk-Lab/blob/osTicket-Help-Desk-Lab-Images/Troubleshooting/Error%204%20missing%20MySQL.JPG" width="800">
+
 **Cause:**
-Required extensions were disabled in php.ini.
+Required extensions were disabled in the `php.ini` configuration file.  
+I identified this after reviewing the installer requirements page, which showed missing extensions needed for osTicket to function properly.
 
 **Fix:**
-Edited C:\PHP\php.ini and enabled the following:
+Edited `C:\PHP\php.ini` and enabled the following extensions by removing the `;` in front of each line:
 
 extension=mysqli
 extension=gd2
@@ -237,10 +254,13 @@ extension=mbstring
 extension=openssl
 extension=intl
 
-Restarted IIS: `iisreset` Using Adminstrator in CMD
+Then restarted IIS:
+`iisreset` Using Adminstrator in CMD
 
 **Result:**
-All required extensions were detected and the installer checks passed.
+All required extensions were detected by the installer, and the setup was able to proceed successfully.
+
+This ensured PHP had the required functionality to support osTicket and communicate with the database.
 
 ---
 
