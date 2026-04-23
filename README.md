@@ -131,6 +131,7 @@ Executable: C:\PHP\php-cgi.exe
 Name: PHP via FastCGI
 ```
 
+---
 
 ### MySQL Installation Issues
 
@@ -165,6 +166,135 @@ Successfully renamed:
 ```text
 php.ini-development -> php.ini
 ```
+
+---
+
+### FastCGI Crash (HTTP 500)
+
+**Problem:**
+PHP process crashed when accessed through the browser.
+
+**Cause:**
+Missing Visual C++ Redistributable dependency.
+
+**Fix:**
+Installed the required Visual C++ runtime and restarted IIS:
+
+iisreset
+
+**Result:**
+PHP executed successfully through IIS.
+
+Default Document Error (HTTP 403.14)
+
+**Problem:**
+The osTicket folder loaded but displayed a “Forbidden” error.
+
+**Cause:**
+IIS did not know which file to load by default.
+
+**Fix:**
+Added index.php to the Default Document list in IIS.
+
+**Result:**
+The osTicket installer page loaded correctly.
+
+---
+
+### web.config Conflict Issue
+
+**Problem:**
+Encountered issues loading osTicket due to an IIS configuration conflict.
+
+**Cause:**
+The existing web.config file interfered with IIS handling of the application.
+
+**Fix:**
+Renamed the file:
+
+web.config -> web.config.bak
+
+**Result:**
+The osTicket application loaded successfully.
+
+---
+
+### Missing PHP Extensions (MySQLi Error)
+
+**Problem:**
+The osTicket installer reported missing required PHP extensions.
+
+**Cause:**
+Required extensions were disabled in php.ini.
+
+**Fix:**
+Edited C:\PHP\php.ini and enabled the following:
+
+extension=mysqli
+extension=gd2
+extension=imap
+extension=mbstring
+extension=openssl
+extension=intl
+
+Restarted IIS: `iisreset` Using Adminstrator in CMD
+
+**Result:**
+All required extensions were detected and the installer checks passed.
+
+---
+
+###MySQL Authentication Error
+
+**Problem:**
+osTicket could not connect to MySQL and displayed:
+
+The server requested authentication method unknown to the client
+
+**Cause:**
+MySQL 8 uses caching_sha2_password by default, which is not supported by PHP 7.3.
+
+**Fix:**
+Updated the authentication method using MySQL Shell:
+```
+\sql
+\connect root@localhost
+
+ALTER USER 'root'@'localhost'
+IDENTIFIED WITH mysql_native_password BY 'labuser123!';
+
+FLUSH PRIVILEGES;
+```
+**Result:**
+osTicket successfully connected to the MySQL database.
+
+---
+
+### Configuration File Not Writable
+
+**Problem:**  
+osTicket could not write to `ost-config.php` during installation.
+
+**Cause:**  
+The IIS service account did not have the required permissions to write to the configuration file.
+
+**Initial Attempt:**  
+I initially assigned permissions to `IIS_IUSRS`, but the issue persisted.
+
+**Fix:**  
+After further troubleshooting, I identified that IIS was running under the `IUSR` account. I added `IUSR` to the file permissions for `ost-config.php` and granted:
+
+- Read  
+- Execute  
+- Write  
+
+Then I restarted IIS:
+
+```bat
+iisreset
+```
+**Result:** 
+The installer was able to write to the configuration file successfully, allowing the osTicket installation to complete without errors.
 
 ---
 
