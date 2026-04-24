@@ -207,11 +207,10 @@ PHP executed successfully through IIS.
 ### Default Document Error (HTTP 403.14)
 
 **Problem:**
-IIS did not have a default document configured, so it did not know which file to load when accessing the directory.  
-I identified this after seeing the 403.14 error in the browser and researching the error code, which indicated that no default document was set.
+When accessing the osTicket directory in the browser, IIS returned a 403.14 Forbidden error and did not display the application.
 
 **Cause:**
-IIS did not have a default document configured, so it did not know which file to load when accessing the directory.
+I identified the cause by researching the 403.14 error code, which indicates that no default document is configured in IIS. This means IIS does not know which file (e.g., index.php) to load when accessing a directory.
 
 **Fix:**
 Added `index.php` to the Default Document list in IIS.
